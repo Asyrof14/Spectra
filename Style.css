@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #e6e6e6;
+}
+
+.container {
+    width: 1200px;
+    height: 720px;
+    display: flex;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+}
+
+/* LEFT SIDE */
+.left {
+    flex: 1;
+    background: url("design.jpg") center/cover no-repeat;
+    position: relative;
+}
+
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.85),
+        rgba(0,0,0,0.4),
+        rgba(0,0,0,0.1)
+    );
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+}
+
+.left-text h2 {
+    color: #ffffff;
+    font-size: 28px;
+    font-weight: 500;
+    margin-bottom: 15px;
+}
+
+.left-text p {
+    color: #e0e0e0;
+    font-size: 14px;
+    max-width: 420px;
+    line-height: 1.6;
+}
+
+/* RIGHT SIDE */
+.right {
+    flex: 1;
+    background: linear-gradient(145deg, #1f2233, #2b2f47);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-box {
+    width: 380px;
+    color: #fff;
+}
+
+.form-box h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    color: #9aa0b8;
+    font-size: 14px;
+    margin-bottom: 35px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    margin-top: 15px;
+    color: #b5b9d6;
+}
+
+form input {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 30px;
+    border: 1px solid #3d415f;
+    background: transparent;
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+form input:focus {
+    border-color: #6c7bff;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group input {
+    padding-right: 45px;
+}
+
+.eye {
+    position: absolute;
+    right: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8c92b3;
+    cursor: pointer;
+}
+
+button {
+    margin-top: 30px;
+    padding: 14px;
+    border-radius: 30px;
+    border: none;
+    background: #dcdcdc;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #ffffff;
+}
+
+.bottom {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 25px;
+    color: #9aa0b8;
+}
+
+.bottom a {
+    color: #6c7bff;
+    text-decoration: none;
+}
