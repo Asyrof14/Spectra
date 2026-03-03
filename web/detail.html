@@ -3,123 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectra - Color Detail (Scroll Fixed)</title>
+    <title>Spectra - Color Detail</title>
+    <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* CSS RESET & BASE */
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        
-        /* Hapus overflow: hidden di sini agar bisa scroll */
-        body { 
-            background-color: #0f1014; 
-            color: #ffffff; 
-            display: flex; 
-            min-height: 100vh; 
-        }
-
-        /* SIDEBAR TETAP DI KIRI (STICKY) */
-        .sidebar { 
-            width: 240px; 
-            border-right: 1px solid #23252e; 
-            padding: 40px 20px; 
-            height: 100vh; 
-            position: sticky; 
-            top: 0;
-            flex-shrink: 0; 
-        }
-        .sidebar-title { font-size: 11px; color: #4b5563; letter-spacing: 1px; margin-bottom: 25px; font-weight: 800; }
-        .tag-list li { list-style: none; padding: 12px 15px; font-size: 14px; color: #9ca3af; cursor: pointer; border-radius: 10px; transition: 0.3s; margin-bottom: 5px; }
-        .tag-list li.active { background: #1c1e26; color: #60a5fa; font-weight: 600; }
-
-        /* CONTENT AREA */
-        .content { flex: 1; display: flex; flex-direction: column; }
-
-        /* NAVBAR */
-        .navbar { 
-            padding: 20px 40px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            border-bottom: 1px solid #23252e; 
-            background: #0f1014;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        .logo { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 22px; }
-        .logo-box { width: 30px; height: 30px; background: white; border-radius: 8px; }
-        .search-container { position: relative; }
-        .search-container input { background: #1c1e26; border: 1px solid #2d3139; padding: 10px 45px; border-radius: 25px; color: white; width: 350px; }
-        .search-container i { position: absolute; left: 18px; top: 13px; color: #4b5563; }
-        .nav-right { display: flex; align-items: center; gap: 20px; }
-        .avatar { width: 35px; height: 35px; background: #2d3139; border-radius: 50%; }
-
-        /* MAIN BODY LAYOUT */
-        .main-body { padding: 60px; display: flex; flex-direction: column; align-items: center; }
-        .palette-section { display: flex; gap: 60px; align-items: flex-start; max-width: 1200px; width: 100%; margin-bottom: 80px; }
-
-        /* KIRI: PALETTE */
-        .palette-card { flex: 2; max-width: 800px; }
-        .palette-big { display: flex; height: 500px; border-radius: 35px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
-        .strip { flex: 1; transition: 0.5s ease; cursor: pointer; }
-        .strip:hover { flex: 1.6; filter: saturate(1.2); }
-
-        .palette-footer { margin-top: 30px; display: flex; flex-direction: column; gap: 25px; align-items: center; }
-        .btns { display: flex; gap: 12px; }
-        .action-btn { background: #1c1e26; border: 1px solid #2d3139; color: white; padding: 12px 28px; border-radius: 14px; cursor: pointer; transition: 0.3s; font-size: 14px; }
-        .action-btn:hover { background: #2d3139; transform: translateY(-3px); }
-
-        .tags-row { display: flex; align-items: center; gap: 12px; }
-        .tag-label { font-size: 13px; color: #4b5563; font-weight: 700; }
-        .chip-btn { background: #1c1e26; border: 1px solid #2d3139; color: #9ca3af; padding: 7px 18px; border-radius: 20px; font-size: 12px; cursor: pointer; }
-
-        /* KANAN: 5 WARNA (DENGAN HOVER FIGMA) */
-        .color-details-list { flex: 1; max-width: 300px; display: flex; flex-direction: column; gap: 15px; }
-        .info-card { display: flex; align-items: center; gap: 18px; padding: 15px; border-radius: 18px; transition: 0.3s; position: relative; cursor: pointer; border: 1px solid transparent; }
-        .info-card:hover { background: #1c1e26; border-color: #2d3139; transform: translateX(10px); }
-        
-        .dot { width: 55px; height: 55px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.05); flex-shrink: 0; }
-        .text small { display: block; font-size: 10px; color: #4b5563; font-weight: 800; margin-bottom: 3px; }
-        .text strong { font-size: 16px; color: #f3f4f6; }
-        
-        .hover-icon { position: absolute; right: 20px; color: #4b5563; opacity: 0; transition: 0.3s; }
-        .info-card:hover .hover-icon { opacity: 1; }
-
-        /* SUGGESTIONS SECTION (Bisa di-scroll) */
-        .suggestions { border-top: 1px solid #23252e; padding-top: 60px; width: 100%; max-width: 1200px; }
-        .sub-title { margin-bottom: 40px; color: #4b5563; font-size: 18px; font-weight: 700; text-align: left; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; }
-        .mini-card .preview { display: flex; height: 130px; border-radius: 18px; overflow: hidden; margin-bottom: 12px; }
-        .preview div { flex: 1; }
-        .meta { display: flex; justify-content: space-between; font-size: 12px; color: #4b5563; }
-    </style>
 </head>
 <body>
 
     <aside class="sidebar">
-        <h2 class="sidebar-title">POPULAR TAGS</h2>
+        <h2 class="sidebar-title">Popular Tags</h2>
         <ul class="tag-list">
-            <li>Dark</li><li>Light</li><li class="active">Warm</li><li>Nature</li><li>Cold</li><li>Summer</li>
+            <li>Dark</li>
+            <li>Light</li>
+            <li class="active">Warm</li>
+            <li>Nature</li>
+            <li>Cold</li>
+            <li>Summer</li>
+            <li>Vintage</li>
+            <li>Retro</li>
         </ul>
     </aside>
 
     <main class="content">
         <header class="navbar">
-            <div class="logo"><div class="logo-box"></div><span>Spectra</span></div>
-            <div class="search-container">
-                <i class="fa fa-search"></i>
-                <input type="text" placeholder="Search palettes...">
+            <div class="nav-left">
+                <div class="logo">
+                    <div class="logo-box"></div>
+                    <span>Spectra</span>
+                </div>
+                <div class="search-container">
+                    <i class="fa fa-search"></i>
+                    <input type="text" placeholder="Search palettes...">
+                </div>
             </div>
             <div class="nav-right">
-                <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Home</a>
-                <a href="#" style="color: #9ca3af; text-decoration: none; font-size: 14px;">Collection</a>
+                <a href="#">Home</a>
+                <a href="#">Collection</a>
                 <div class="avatar"></div>
             </div>
         </header>
 
         <div class="main-body">
-            <div class="palette-section">
-                <div class="palette-card">
+            <div class="detail-container">
+                <div class="palette-display">
                     <div class="palette-big">
                         <div class="strip" style="background: #730808;"></div>
                         <div class="strip" style="background: #DF3B3B;"></div>
@@ -127,44 +52,58 @@
                         <div class="strip" style="background: #F26868;"></div>
                         <div class="strip" style="background: #FB8D8D;"></div>
                     </div>
-                    <div class="palette-footer">
+                    
+                    <div class="palette-actions">
                         <div class="btns">
                             <button class="action-btn"><i class="fa fa-heart" style="color: #ff4d4d;"></i> 210 K</button>
                             <button class="action-btn"><i class="fa fa-download"></i> Image</button>
-                            <button class="action-btn"><i class="fa fa-link"></i> Link</button>
+                            <button class="action-btn"><i class="fa fa-share-alt"></i> Link</button>
                         </div>
-                        <div class="tags-row">
+                        <div class="tags">
                             <span class="tag-label">Tags:</span>
-                            <button class="chip-btn">Red</button><button class="chip-btn">Warm</button><button class="chip-btn">Figma UI</button>
+                            <span class="chip">Red</span>
+                            <span class="chip">Warm</span>
+                            <span class="chip">Spectra UI</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="color-details-list">
+                <div class="color-info-list">
                     <div class="info-card">
                         <div class="dot" style="background: #730808;"></div>
-                        <div class="text"><small>HEX CODE</small><strong>#730808</strong></div>
-                        <i class="fa fa-copy hover-icon"></i>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#730808</strong>
+                        </div>
                     </div>
-                    <div class="info-card">
+                    <div class="info-card highlight">
                         <div class="dot" style="background: #DF3B3B;"></div>
-                        <div class="text"><small>HEX CODE</small><strong>#DF3B3B</strong></div>
-                        <i class="fa fa-copy hover-icon"></i>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#DF3B3B</strong>
+                        </div>
+                        <i class="fa fa-i-cursor tip-icon"></i>
                     </div>
                     <div class="info-card">
                         <div class="dot" style="background: #EF4444;"></div>
-                        <div class="text"><small>HEX CODE</small><strong>#EF4444</strong></div>
-                        <i class="fa fa-copy hover-icon"></i>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#EF4444</strong>
+                        </div>
                     </div>
                     <div class="info-card">
                         <div class="dot" style="background: #F26868;"></div>
-                        <div class="text"><small>HEX CODE</small><strong>#F26868</strong></div>
-                        <i class="fa fa-copy hover-icon"></i>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#F26868</strong>
+                        </div>
                     </div>
                     <div class="info-card">
                         <div class="dot" style="background: #FB8D8D;"></div>
-                        <div class="text"><small>HEX CODE</small><strong>#FB8D8D</strong></div>
-                        <i class="fa fa-copy hover-icon"></i>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#FB8D8D</strong>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -174,11 +113,21 @@
                 <div class="grid">
                     <div class="mini-card">
                         <div class="preview">
-                            <div style="background: #1a1a1a;"></div><div style="background: #333;"></div><div style="background: #444;"></div>
+                            <div style="background: #2D3139;"></div>
+                            <div style="background: #4B5563;"></div>
+                            <div style="background: #9CA3AF;"></div>
                         </div>
                         <div class="meta"><span>❤️ 12K</span><i class="fa fa-eye"></i></div>
                     </div>
+                    <div class="mini-card">
+                        <div class="preview">
+                            <div style="background: #7c2d12;"></div>
+                            <div style="background: #b45309;"></div>
+                            <div style="background: #d97706;"></div>
+                        </div>
+                        <div class="meta"><span>❤️ 8K</span><i class="fa fa-eye"></i></div>
                     </div>
+                </div>
             </section>
         </div>
     </main>
