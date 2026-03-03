@@ -1,0 +1,157 @@
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, sans-serif;
+}
+
+body {
+    background-color: #1a1c23;
+    color: #ffffff;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* SIDEBAR */
+.sidebar {
+    width: 200px;
+    border-right: 1px solid #2d3139;
+    padding: 30px 15px;
+    overflow-y: auto;
+}
+
+.sidebar-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #6b7280;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.tag-list {
+    list-style: none;
+}
+
+.tag-list li {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: #9ca3af;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 2px;
+}
+
+.tag-list li:hover, .tag-list li.active {
+    background-color: #2d3139;
+    color: #ffffff;
+}
+
+/* NAVBAR */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 40px;
+    border-bottom: 1px solid #2d3139;
+}
+
+.nav-left { display: flex; align-items: center; gap: 30px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 22px; }
+.search-bar { position: relative; }
+.search-bar input {
+    background: #252830;
+    border: 1px solid #3f444d;
+    padding: 10px 15px 10px 40px;
+    border-radius: 25px;
+    color: white;
+    width: 320px;
+}
+.search-bar i { position: absolute; left: 15px; top: 12px; color: #6b7280; font-size: 14px; }
+
+.nav-right { display: flex; gap: 25px; align-items: center; font-size: 14px; color: #9ca3af; }
+.profile-circle { width: 32px; height: 32px; background: #4b5563; border-radius: 50%; }
+
+/* MAIN AREA */
+.content { flex: 1; display: flex; flex-direction: column; }
+.scroll-area { flex: 1; overflow-y: auto; padding-bottom: 50px; }
+
+.main-display {
+    padding: 50px 80px;
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+}
+
+.palette-container { flex: 1; max-width: 700px; }
+.big-palette {
+    display: flex;
+    height: 480px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+.color-strip { flex: 1; transition: 0.3s; }
+.color-strip:hover { flex: 1.2; }
+
+.palette-footer { margin-top: 25px; display: flex; flex-direction: column; align-items: center; }
+.action-group { display: flex; gap: 12px; margin-bottom: 20px; }
+
+.btn {
+    background: #252830;
+    border: 1px solid #3f444d;
+    color: white;
+    padding: 10px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn:hover { background: #3f444d; }
+
+.tags-group { display: flex; gap: 8px; align-items: center; }
+.label { font-size: 12px; color: #6b7280; }
+.tag {
+    background: #252830;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 11px;
+    border: 1px solid #3f444d;
+}
+
+/* SIDE COLOR INFO */
+.color-details { width: 220px; display: flex; flex-direction: column; gap: 15px; }
+.color-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.active-item { background: #252830; border: 1px solid #3f444d; position: relative; }
+.color-dot { width: 55px; height: 55px; border-radius: 50%; }
+.color-text span { font-size: 10px; color: #6b7280; display: block; }
+.color-text strong { font-size: 14px; font-weight: 600; }
+.copy-icon { position: absolute; right: 12px; color: #6b7280; font-size: 14px; }
+
+/* LOWER SECTION */
+.similar-section { padding: 50px 80px; border-top: 1px solid #2d3139; }
+.section-title { text-align: center; font-size: 20px; margin-bottom: 30px; color: #9ca3af; }
+.palette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 20px;
+}
+.small-card .card-preview {
+    display: flex;
+    height: 110px;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+.card-preview div { flex: 1; }
+.card-info { display: flex; justify-content: space-between; font-size: 11px; color: #6b7280; }
