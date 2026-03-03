@@ -17,6 +17,7 @@ body {
     width: 200px;
     border-right: 1px solid #23252e;
     padding: 30px 15px;
+    overflow-y: auto;
 }
 
 .sidebar-title {
@@ -65,50 +66,54 @@ body {
 .nav-right { display: flex; gap: 20px; align-items: center; color: #9ca3af; font-size: 14px; }
 .avatar { width: 32px; height: 32px; background: #374151; border-radius: 50%; }
 
-/* Main Detail */
+/* Main Detail Layout */
 .main-body { flex: 1; overflow-y: auto; padding: 40px; }
 .detail-container { display: flex; gap: 50px; justify-content: center; margin-bottom: 60px; }
 
 .palette-display { flex: 1; max-width: 750px; }
 .palette-big {
     display: flex; height: 450px; border-radius: 30px;
-    overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+    overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
 }
 
+/* Trik Hover CSS */
 .strip { flex: 1; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
-.strip:hover { flex: 1.4; filter: saturate(1.2); }
+.strip:hover { flex: 1.5; filter: saturate(1.3) brightness(1.1); }
 
 .palette-actions { margin-top: 25px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.btns { display: flex; gap: 10px; }
 .action-btn {
     background: #1c1e26; border: 1px solid #2d3139; color: white;
-    padding: 12px 25px; border-radius: 12px; cursor: pointer; margin: 0 5px;
+    padding: 12px 25px; border-radius: 12px; cursor: pointer;
+    font-size: 14px; transition: 0.3s;
 }
-.action-btn:hover { background: #2d3139; }
+.action-btn:hover { background: #2d3139; transform: translateY(-2px); }
 
-.chip { background: #1c1e26; padding: 5px 12px; border-radius: 15px; font-size: 12px; border: 1px solid #2d3139; margin-left: 5px; }
+.chip { background: #1c1e26; padding: 5px 12px; border-radius: 15px; font-size: 11px; border: 1px solid #2d3139; margin-left: 5px; color: #9ca3af; }
 
-/* Color Info Card */
+/* Color Info Cards */
 .color-info-list { width: 220px; display: flex; flex-direction: column; gap: 15px; }
-.info-card { display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 15px; }
+.info-card { display: flex; align-items: center; gap: 15px; padding: 12px; border-radius: 15px; transition: 0.3s; }
 .highlight { background: #1c1e26; border: 1px solid #2d3139; position: relative; }
 
-.dot { width: 50px; height: 50px; border-radius: 50%; }
-.text small { display: block; font-size: 10px; color: #6b7280; }
+.dot { width: 50px; height: 50px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); }
+.text small { display: block; font-size: 10px; color: #6b7280; font-weight: 700; margin-bottom: 2px; }
 
-/* TRIK: Memudahkan Copy manual */
+/* Fitur Select Otomatis tanpa JS */
 .text strong { 
     font-size: 15px; 
-    user-select: all; /* Klik 2x langsung ke-blok kodenya */
+    user-select: all; /* User klik 2x langsung ter-blok semua kodenya */
     cursor: text;
-    color: #e5e7eb;
+    color: #f3f4f6;
+    letter-spacing: 0.5px;
 }
 
 .tip-icon { position: absolute; right: 15px; color: #4b5563; font-size: 12px; }
 
-/* Suggestions */
-.suggestions { border-top: 1px solid #23252e; pt-40px; margin-top: 40px; padding-top: 30px;}
-.sub-title { text-align: center; margin-bottom: 30px; color: #9ca3af; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
-.mini-card .preview { display: flex; height: 100px; border-radius: 12px; overflow: hidden; margin-bottom: 8px; }
-.preview div { flex: 1; }
-.meta { display: flex; justify-content: space-between; font-size: 12px; color: #4b5563; }
+/* Suggestions Grid */
+.suggestions { border-top: 1px solid #23252e; margin-top: 40px; padding-top: 30px; }
+.sub-title { text-align: center; margin-bottom: 30px; color: #6b7280; font-size: 18px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; }
+.mini-card .preview { display: flex; height: 110px; border-radius: 12px; overflow: hidden; margin-bottom: 10px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3); }
+.mini-card .preview div { flex: 1; }
+.meta { display: flex; justify-content: space-between; font-size: 12px; color: #4b5563; padding: 0 5px; }
