@@ -101,6 +101,39 @@ body {
     pointer-events: none;
 }
 
+.nav-search-static {
+    flex: 1; 
+    max-width: 450px; 
+    opacity: 1;
+    visibility: visible;
+    margin-left: 2rem; 
+    transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out, margin 0.4s ease-in-out;
+    position: relative;
+}
+
+.nav-search-static input {
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 0.6rem 2.5rem 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    outline: none;
+    white-space: nowrap; 
+}
+
+.nav-search-static svg {
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    fill: var(--text-muted);
+    width: 18px;
+    height: 18px;
+    pointer-events: none;
+}
+
 .nav-links {
     display: flex;
     align-items: center;
@@ -266,6 +299,8 @@ body {
     width: 20px;
     height: 20px;
 }
+
+
 
 .example-tags {
     display: flex;
