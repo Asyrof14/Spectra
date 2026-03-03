@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectra - Color Detail</title>
+    <title>Spectra - Detail Palette UI</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
 
     <aside class="sidebar">
-        <h2 class="sidebar-title">POPULAR TAGS</h2>
+        <h2 class="sidebar-title">Popular Tags</h2>
         <ul class="tag-list">
             <li>Dark</li>
             <li>Light</li>
@@ -20,6 +20,7 @@
             <li>Summer</li>
             <li>Vintage</li>
             <li>Retro</li>
+            <li>Ocean</li>
         </ul>
     </aside>
 
@@ -32,7 +33,7 @@
                 </div>
                 <div class="search-container">
                     <i class="fa fa-search"></i>
-                    <input type="text" placeholder="Try search something fancy?">
+                    <input type="text" placeholder="Search palettes...">
                 </div>
             </div>
             <div class="nav-right">
@@ -43,8 +44,8 @@
         </header>
 
         <div class="main-body">
-            <div class="palette-section">
-                <div class="palette-card">
+            <div class="detail-container">
+                <div class="palette-display">
                     <div class="palette-big">
                         <div class="strip" style="background: #730808;"></div>
                         <div class="strip" style="background: #DF3B3B;"></div>
@@ -52,26 +53,27 @@
                         <div class="strip" style="background: #F26868;"></div>
                         <div class="strip" style="background: #FB8D8D;"></div>
                     </div>
-                    <div class="palette-footer">
+                    
+                    <div class="palette-actions">
                         <div class="btns">
                             <button class="action-btn"><i class="fa fa-heart" style="color: #ff4d4d;"></i> 210 K</button>
                             <button class="action-btn"><i class="fa fa-download"></i> Image</button>
-                            <button class="action-btn"><i class="fa fa-link"></i> Link</button>
+                            <button class="action-btn"><i class="fa fa-share-alt"></i> Link</button>
                         </div>
-                        <div class="tags-row">
+                        <div class="tags-container">
                             <span class="tag-label">Tags:</span>
-                            <button class="chip">Red</button>
-                            <button class="chip">Warm</button>
-                            <button class="chip">Gradient</button>
+                            <button class="chip-btn">Red</button>
+                            <button class="chip-btn">Warm</button>
+                            <button class="chip-btn">Spectra UI</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="color-details-list">
+                <div class="color-info-list">
                     <div class="info-card">
                         <div class="dot" style="background: #730808;"></div>
                         <div class="text">
-                            <small>rgb(115, 8, 8)</small>
+                            <small>HEX CODE</small>
                             <strong>#730808</strong>
                         </div>
                         <i class="fa fa-copy hover-icon"></i>
@@ -79,13 +81,59 @@
                     <div class="info-card">
                         <div class="dot" style="background: #DF3B3B;"></div>
                         <div class="text">
-                            <small>rgb(223, 59, 59)</small>
+                            <small>HEX CODE</small>
                             <strong>#DF3B3B</strong>
+                        </div>
+                        <i class="fa fa-copy hover-icon"></i>
+                    </div>
+                    <div class="info-card">
+                        <div class="dot" style="background: #EF4444;"></div>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#EF4444</strong>
+                        </div>
+                        <i class="fa fa-copy hover-icon"></i>
+                    </div>
+                    <div class="info-card">
+                        <div class="dot" style="background: #F26868;"></div>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#F26868</strong>
+                        </div>
+                        <i class="fa fa-copy hover-icon"></i>
+                    </div>
+                    <div class="info-card">
+                        <div class="dot" style="background: #FB8D8D;"></div>
+                        <div class="text">
+                            <small>HEX CODE</small>
+                            <strong>#FB8D8D</strong>
                         </div>
                         <i class="fa fa-copy hover-icon"></i>
                     </div>
                 </div>
             </div>
+
+            <section class="suggestions">
+                <h3 class="sub-title">More similar palettes</h3>
+                <div class="grid">
+                    <div class="mini-card">
+                        <div class="preview">
+                            <div style="background: #2D3139;"></div>
+                            <div style="background: #4B5563;"></div>
+                            <div style="background: #9CA3AF;"></div>
+                        </div>
+                        <div class="meta"><span>❤️ 12K</span><i class="fa fa-eye"></i></div>
+                    </div>
+                    <div class="mini-card">
+                        <div class="preview">
+                            <div style="background: #7c2d12;"></div>
+                            <div style="background: #b45309;"></div>
+                            <div style="background: #d97706;"></div>
+                        </div>
+                        <div class="meta"><span>❤️ 8K</span><i class="fa fa-eye"></i></div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
