@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spectra - Detail Palette</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h2 class="sidebar-title">Popular Tags</h2>
+        <ul class="tag-list">
+            <li>Dark</li>
+            <li>Light</li>
+            <li>Cold</li>
+            <li class="active">Warm</li>
+            <li>Summer</li>
+            <li>Fall</li>
+            <li>Winter</li>
+            <li>Spring</li>
+            <li>Happy</li>
+            <li>Sad</li>
+            <li>Ocean</li>
+            <li>Space</li>
+            <li>Sky</li>
+            <li>Mountain</li>
+            <li>Nature</li>
+        </ul>
+    </aside>
+
+    <main class="content">
+        <header class="navbar">
+            <div class="nav-left">
+                <div class="logo">
+                    <svg width="30" height="30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="50" cy="50" r="45" stroke="white" stroke-width="5"/>
+                        <path d="M30 50C30 38.9543 38.9543 30 50 30C61.0457 30 70 38.9543 70 50" stroke="white" stroke-width="5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Spectra</span>
+                </div>
+                <div class="search-bar">
+                    <i class="fa fa-search"></i>
+                    <input type="text" placeholder="Try search something fancy?">
+                </div>
+            </div>
+            <nav class="nav-right">
+                <a href="#">Home</a>
+                <a href="#">Collection</a>
+                <div class="profile-circle"></div>
+            </nav>
+        </header>
+
+        <div class="scroll-area">
+            <section class="main-display">
+                <div class="palette-container">
+                    <div class="big-palette">
+                        <div class="color-strip" style="background: #730808;"></div>
+                        <div class="color-strip" style="background: #DF3B3B;"></div>
+                        <div class="color-strip" style="background: #EF4444;"></div>
+                        <div class="color-strip" style="background: #F26868;"></div>
+                        <div class="color-strip" style="background: #FB8D8D;"></div>
+                    </div>
+
+                    <div class="palette-footer">
+                        <div class="action-group">
+                            <button class="btn btn-outline"><i class="fa fa-heart" style="color: #ff4d4d;"></i> 210 K</button>
+                            <button class="btn btn-outline"><i class="fa fa-download"></i> Image</button>
+                            <button class="btn btn-outline"><i class="fa fa-link"></i> Link</button>
+                        </div>
+                        <div class="tags-group">
+                            <span class="label">Tags:</span>
+                            <span class="tag">Red</span>
+                            <span class="tag">Warm</span>
+                            <span class="tag">Gradient</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-details">
+                    <div class="color-item">
+                        <div class="color-dot" style="background: #730808;"></div>
+                        <div class="color-text">
+                            <span>rgb(115, 8, 8)</span>
+                            <strong>#730808</strong>
+                        </div>
+                    </div>
+                    <div class="color-item active-item">
+                        <div class="color-dot" style="background: #DF3B3B;"></div>
+                        <div class="color-text">
+                            <span>rgb(223, 59, 59)</span>
+                            <strong>#DF3B3B</strong>
+                        </div>
+                        <i class="fa fa-copy copy-icon"></i>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-dot" style="background: #EF4444;"></div>
+                        <div class="color-text">
+                            <span>rgb(239, 68, 68)</span>
+                            <strong>#EF4444</strong>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-dot" style="background: #F26868;"></div>
+                        <div class="color-text">
+                            <span>rgb(242, 104, 104)</span>
+                            <strong>#F26868</strong>
+                        </div>
+                    </div>
+                    <div class="color-item">
+                        <div class="color-dot" style="background: #FB8D8D;"></div>
+                        <div class="color-text">
+                            <span>rgb(251, 141, 141)</span>
+                            <strong>#FB8D8D</strong>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="similar-section">
+                <h3 class="section-title">More similar palettes</h3>
+                <div class="palette-grid">
+                    <div class="small-card">
+                        <div class="card-preview">
+                            <div style="background: #1a3a4a"></div>
+                            <div style="background: #245269"></div>
+                            <div style="background: #3a7d9e"></div>
+                            <div style="background: #8fb8cc"></div>
+                        </div>
+                        <div class="card-info">
+                            <span><i class="fa fa-heart"></i> 44 K</span>
+                            <i class="fa fa-eye"></i>
+                        </div>
+                    </div>
+                    </div>
+            </section>
+        </div>
+    </main>
+
+</body>
+</html>
