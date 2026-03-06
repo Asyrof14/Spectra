@@ -336,6 +336,28 @@
         });
     });
 
+    document.querySelectorAll('.color-stripe').forEach(stripe => {
+        stripe.addEventListener('click', () => {
+            // Ambil teks dari elemen span .hex-text di dalam stripe yang diklik
+            const hexTextElement = stripe.querySelector('.hex-text');
+            // Pastikan format hex selalu diawali dengan '#'
+            const hexCode = '#' + hexTextElement.innerText.replace('#', '');
+
+            // Salin ke Clipboard menggunakan Clipboard API
+            navigator.clipboard.writeText(hexCode).then(() => {
+                // Efek visual: Ubah teks sementara menjadi "Copied!"
+                const originalText = hexTextElement.innerText;
+                hexTextElement.innerText = 'Copied!';
+                
+                // Kembalikan teks asli setelah 1 detik
+                setTimeout(() => {
+                    hexTextElement.innerText = originalText;
+                }, 1000);
+            }).catch(err => {
+                console.error('Gagal menyalin teks: ', err);
+            });
+        });
+    });
     </script>
 </body>
 </html>
