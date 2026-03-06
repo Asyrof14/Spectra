@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spectra - Color Palettes</title>
+    <title>Collection</title>
     <link rel="stylesheet" href="css/Style.css">
 </head>
 <body>
@@ -254,31 +254,5 @@
         </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const scrollContent = document.getElementById('scroll-content');
-            const mainSearch = document.getElementById('main-search-container');
-            const navSearchWrapper = document.getElementById('nav-search-wrapper');
-
-            const observerOptions = {
-                root: scrollContent, 
-                threshold: 0 
-            };
-
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    // Jika form utama menghilang dari pandangan (scroll ke bawah)
-                    if (!entry.isIntersecting) {
-                        navSearchWrapper.classList.add('active');
-                    } else {
-                        // Jika form utama kembali terlihat
-                        navSearchWrapper.classList.remove('active');
-                    }
-                });
-            }, observerOptions);
-
-            observer.observe(mainSearch);
-        });
-    </script>
 </body>
 </html>
