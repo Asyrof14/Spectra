@@ -59,6 +59,13 @@ body {
     width: 120px;
 }
 
+.logo2 {
+    width: 120px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;   
+}
+
 /* --- ANIMASI NAV SEARCH BAR --- */
 .nav-search-wrapper {
     flex: 1; 
@@ -207,6 +214,117 @@ body {
     margin-bottom: 0.5rem;
 }
 
+/* --- PROFILE MENU STYLE --- */
+.profile-menu-container {
+    position: relative; /* Kunci agar dropdown menempel di bawah container ini */
+}
+
+/* Tombol Profil di Navbar */
+.profile-btn {
+    width: 40px;
+    height: 40px;
+    background-color: var(--text-main);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.profile-btn:hover {
+    opacity: 0.8;
+}
+
+.profile-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--bg-dark); /* Ikon SVG berwarna gelap */
+}
+
+/* Kotak Dropdown Pop-up */
+.profile-dropdown {
+    position: absolute;
+    top: calc(100% + 15px); /* Jarak dari bawah navbar */
+    right: 0;
+    width: 240px;
+    background-color: var(--bg-panel); /* Warna gelap yang sama dengan sidebar */
+    border-radius: 12px;
+    padding: 2rem 0 1.5rem 0;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    
+    /* Awalnya disembunyikan */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-15px); /* Posisi agak ke atas untuk animasi turun */
+    transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Class ini akan ditambahkan oleh JavaScript saat tombol diklik */
+.profile-dropdown.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0); /* Turun ke posisi normal */
+}
+
+/* Info Avatar & Nama di dalam dropdown */
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.profile-avatar-large {
+    width: 65px;
+    height: 65px;
+    background-color: var(--text-main);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.profile-avatar-large svg {
+    width: 35px;
+    height: 35px;
+    fill: var(--bg-dark);
+}
+
+.profile-name {
+    color: var(--text-main);
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Daftar Link di Dropdown */
+.profile-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.profile-links li a {
+    display: block;
+    padding: 0.8rem 2rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.profile-links li a:hover {
+    color: var(--text-main);
+    background-color: var(--bg-hover); /* Efek highlight kotak saat di-hover */
+}
+
+.profile-links li a.logout {
+    margin-top: 0.5rem;
+}
+
 .tag {
     font-size: 1.3rem;
     padding-bottom: 1rem;
@@ -245,6 +363,16 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 3rem;
+}
+
+.hero2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3rem;
+    gap: 1rem;
+    color: var(--text-muted);
 }
 
 .hero-text {
@@ -344,8 +472,7 @@ body {
 /* Colors - PERBAIKAN BENTUK PERSEGI */
 .colors {
     display: flex;
-    /* height: 140px; <-- Tinggi dibuang */
-    aspect-ratio: 1 / 1; /* <-- Diganti ini agar otomatis bentuknya kotak persis seperti Square */
+    aspect-ratio: 1 / 1;
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
@@ -438,6 +565,23 @@ body {
 
 .liked {
     color: #ff4757;
+}
+
+.about {
+    margin-bottom: 3rem;
+}
+
+.about-title {
+    font-size: 35px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.about-subtitle {
+    font-size: 25px;
+    margin-bottom: 5px;
 }
 
 /* Responsive Design (Penting agar jika dibuka di layar kecil, kotaknya tidak rusak) */
