@@ -24,10 +24,34 @@
         </div>
 
         <div class="nav-right">
-       <a href="#">Log In</a>
+            <a href="#">Log In</a>
             <a href="#" class="btn-signup">
                 <div class="btn-signup-text">Signup</div>
             </a>
+
+            <div class="profile-menu-container">
+                
+                <div class="profile-btn" id="profile-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                </div>
+
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-info">
+                        <div class="profile-avatar-large">
+                            <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+                        </div>
+                        <div class="profile-name">Name</div>
+                    </div>
+
+                    <ul class="profile-links">
+                        <li><a href="#">Collection</a></li>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Term of Service</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#" class="logout">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -51,7 +75,7 @@
         </aside>
 
         <main class="content" id="scroll-content">
-       <section class="hero">
+            <section class="hero">
                 <div class="hero-text">
                <h1>The Simplest Way to Choose Your Brand Colors</h1>
                     <p>Explore thousands of curated color palettes and find the exact shades that bring your creative vision to life.</p>
@@ -281,11 +305,9 @@
 
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Jika form utama menghilang dari pandangan (scroll ke bawah)
                     if (!entry.isIntersecting) {
                         navSearchWrapper.classList.add('active');
                     } else {
-                        // Jika form utama kembali terlihat
                         navSearchWrapper.classList.remove('active');
                     }
                 });
@@ -293,6 +315,27 @@
 
             observer.observe(mainSearch);
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const profileBtn = document.getElementById('profile-btn');
+            const profileDropdown = document.getElementById('profile-dropdown');
+
+        // Mengatur toggle saat ikon diklik
+        profileBtn.addEventListener('click', (event) => {
+            // Mencegah klik menembus ke luar elemen ini
+            event.stopPropagation();
+            profileDropdown.classList.toggle('show');
+        });
+
+        // Menutup pop-up jika pengguna klik di area luar
+        document.addEventListener('click', (event) => {
+            // Jika yang diklik bukan tombol profil DAN bukan isi dropdown itu sendiri
+            if (!profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
+                profileDropdown.classList.remove('show');
+            }
+        });
+    });
+
     </script>
 </body>
 </html>
