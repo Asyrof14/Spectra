@@ -320,16 +320,12 @@
             const profileBtn = document.getElementById('profile-btn');
             const profileDropdown = document.getElementById('profile-dropdown');
 
-        // Mengatur toggle saat ikon diklik
         profileBtn.addEventListener('click', (event) => {
-            // Mencegah klik menembus ke luar elemen ini
             event.stopPropagation();
             profileDropdown.classList.toggle('show');
         });
 
-        // Menutup pop-up jika pengguna klik di area luar
         document.addEventListener('click', (event) => {
-            // Jika yang diklik bukan tombol profil DAN bukan isi dropdown itu sendiri
             if (!profileBtn.contains(event.target) && !profileDropdown.contains(event.target)) {
                 profileDropdown.classList.remove('show');
             }
@@ -338,18 +334,13 @@
 
     document.querySelectorAll('.color-stripe').forEach(stripe => {
         stripe.addEventListener('click', () => {
-            // Ambil teks dari elemen span .hex-text di dalam stripe yang diklik
             const hexTextElement = stripe.querySelector('.hex-text');
-            // Pastikan format hex selalu diawali dengan '#'
             const hexCode = '#' + hexTextElement.innerText.replace('#', '');
 
-            // Salin ke Clipboard menggunakan Clipboard API
             navigator.clipboard.writeText(hexCode).then(() => {
-                // Efek visual: Ubah teks sementara menjadi "Copied!"
                 const originalText = hexTextElement.innerText;
                 hexTextElement.innerText = 'Copied!';
                 
-                // Kembalikan teks asli setelah 1 detik
                 setTimeout(() => {
                     hexTextElement.innerText = originalText;
                 }, 1000);

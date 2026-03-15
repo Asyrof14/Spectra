@@ -1,4 +1,6 @@
-/* CSS Reset & Variables */
+/* =========================================
+   1. CSS RESET & VARIABLES
+   ========================================= */
 :root {
     --bg-dark: #1e1f26;
     --bg-panel: #262730;
@@ -39,7 +41,9 @@ body {
     overflow: hidden;
 }
 
-/* Navbar */
+/* =========================================
+   2. NAVBAR & PROFILE MENU
+   ========================================= */
 .navbar {
     display: flex;
     align-items: center;
@@ -108,6 +112,7 @@ body {
     pointer-events: none;
 }
 
+/* --- NAV SEARCH STATIC --- */
 .nav-search-static {
     flex: 1; 
     max-width: 450px; 
@@ -189,37 +194,11 @@ body {
     opacity: 0.8;
 }
 
-/* Main Layout */
-.main-container {
-    display: flex;
-    flex: 1;
-    overflow: hidden; 
-}
-
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    border-right: 1px solid var(--border-color);
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    overflow-y: auto; 
-    flex-shrink: 0;
-}
-
-.sidebar h3 {
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-}
-
-/* --- PROFILE MENU STYLE --- */
+/* --- PROFILE MENU --- */
 .profile-menu-container {
-    position: relative; /* Kunci agar dropdown menempel di bawah container ini */
+    position: relative; 
 }
 
-/* Tombol Profil di Navbar */
 .profile-btn {
     width: 40px;
     height: 40px;
@@ -239,36 +218,31 @@ body {
 .profile-btn svg {
     width: 24px;
     height: 24px;
-    fill: var(--bg-dark); /* Ikon SVG berwarna gelap */
+    fill: var(--bg-dark);
 }
 
-/* Kotak Dropdown Pop-up */
 .profile-dropdown {
     position: absolute;
-    top: calc(100% + 15px); /* Jarak dari bawah navbar */
+    top: calc(100% + 15px);
     right: 0;
     width: 240px;
-    background-color: var(--bg-panel); /* Warna gelap yang sama dengan sidebar */
+    background-color: var(--bg-panel);
     border-radius: 12px;
     padding: 2rem 0 1.5rem 0;
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
     z-index: 100;
-    
-    /* Awalnya disembunyikan */
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-15px); /* Posisi agak ke atas untuk animasi turun */
+    transform: translateY(-15px);
     transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* Class ini akan ditambahkan oleh JavaScript saat tombol diklik */
 .profile-dropdown.show {
     opacity: 1;
     visibility: visible;
-    transform: translateY(0); /* Turun ke posisi normal */
+    transform: translateY(0); 
 }
 
-/* Info Avatar & Nama di dalam dropdown */
 .profile-info {
     display: flex;
     flex-direction: column;
@@ -299,7 +273,6 @@ body {
     font-weight: 500;
 }
 
-/* Daftar Link di Dropdown */
 .profile-links {
     list-style: none;
     display: flex;
@@ -318,11 +291,37 @@ body {
 
 .profile-links li a:hover {
     color: var(--text-main);
-    background-color: var(--bg-hover); /* Efek highlight kotak saat di-hover */
+    background-color: var(--bg-hover); 
 }
 
 .profile-links li a.logout {
     margin-top: 0.5rem;
+}
+
+/* =========================================
+   3. MAIN LAYOUT & SIDEBAR
+   ========================================= */
+.main-container {
+    display: flex;
+    flex: 1;
+    overflow: hidden; 
+}
+
+.sidebar {
+    width: 250px;
+    border-right: 1px solid var(--border-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    overflow-y: auto; 
+    flex-shrink: 0;
+}
+
+.sidebar h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
 }
 
 .tag {
@@ -349,15 +348,15 @@ body {
     color: var(--text-main);
 }
 
-/* Content Area - PERBAIKAN ISSUE SCROLLBAR */
+/* =========================================
+   4. LANDING PAGE CONTENT
+   ========================================= */
 .content {
     flex: 1;
     padding: 2rem 3rem; 
-    /* max-width: 1200px;  <-- Dihapus agar lebarnya pol mentok 100% sampai pojok kanan */
     overflow-y: auto; 
 }
 
-/* Hero Section */
 .hero {
     display: flex;
     justify-content: space-between;
@@ -392,7 +391,7 @@ body {
     line-height: 1.5;
 }
 
-/* Search Section Utama */
+/* --- SEARCH SECTION --- */
 .search-container {
     margin-bottom: 3rem;
 }
@@ -428,8 +427,6 @@ body {
     height: 20px;
 }
 
-
-
 .example-tags {
     display: flex;
     align-items: center;
@@ -454,10 +451,9 @@ body {
     color: var(--text-main);
 }
 
-/* Palette Grid - PERBAIKAN 5 BARIS */
+/* --- PALETTE GRID --- */
 .palette-grid {
     display: grid;
-    /* Ubah ukuran dari auto-fill jadi 5 kolom fix */
     grid-template-columns: repeat(5, 1fr); 
     gap: 2rem;
     padding-bottom: 4rem;
@@ -469,7 +465,6 @@ body {
     gap: 0.8rem;
 }
 
-/* Colors - PERBAIKAN BENTUK PERSEGI */
 .colors {
     display: flex;
     aspect-ratio: 1 / 1;
@@ -491,14 +486,12 @@ body {
     display: flex;
     align-items: end;
     justify-content: center;
-    position: relative;
 }
 
 .colors:hover .color-stripe:hover {
     flex: 2;
 }
 
-/* Hover Overlay for Hex code */
 .hex-overlay {
     position: absolute;
     bottom: 10px;
@@ -523,7 +516,6 @@ body {
     font-weight: 600;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.95);
-    /* Memberikan efek bayangan agar teks tetap terbaca di warna terang maupun gelap */
     background-color: rgba(0, 0, 0, 0.1);
     background-size: 100%;
     letter-spacing: 1px;
@@ -536,10 +528,9 @@ body {
     white-space: nowrap; 
 }
 
-/* Memunculkan teks Hex hanya pada stripe yang sedang ditunjuk/hover */
 .color-stripe:hover .hex-text {
     opacity: 1;
-    transition-delay: 0.1s; /* Jeda sedikit agar tidak muncul bertumpuk saat mouse digeser cepat */
+    transition-delay: 0.1s; 
 }
 
 .card-footer {
@@ -567,6 +558,7 @@ body {
     color: #ff4757;
 }
 
+/* --- ABOUT SECTION --- */
 .about {
     margin-bottom: 3rem;
 }
@@ -584,10 +576,12 @@ body {
     margin-bottom: 5px;
 }
 
-/* Responsive Design (Penting agar jika dibuka di layar kecil, kotaknya tidak rusak) */
+/* =========================================
+   5. RESPONSIVE DESIGN (LANDING PAGE)
+   ========================================= */
 @media (max-width: 1400px) {
     .palette-grid {
-        grid-template-columns: repeat(4, 1fr); /* 4 baris di laptop kecil */
+        grid-template-columns: repeat(4, 1fr);
     }
 }
 
@@ -599,7 +593,7 @@ body {
         font-size: 2.8rem;
     }
     .palette-grid {
-        grid-template-columns: repeat(3, 1fr); /* 3 baris di tablet */
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 
@@ -640,7 +634,7 @@ body {
         font-size: 2.2rem;
     }
     .palette-grid {
-        grid-template-columns: repeat(2, 1fr); /* 2 baris di HP */
+        grid-template-columns: repeat(2, 1fr);
     }
     .example-tags {
         flex-wrap: wrap;
@@ -648,19 +642,17 @@ body {
 }
 
 /* =========================================
-   SPECTRA DETAIL PAGE STYLES
+   6. SPECTRA DETAIL PAGE STYLES
    ========================================= */
-
-/* Main Container */
 .detail-main-wrapper {
     display: flex;
-    background-color: #1a1a22; /* Dark theme background */
+    background-color: #1a1a22; 
     min-height: 100vh;
     font-family: 'Inter', sans-serif;
     color: #ffffff;
 }
 
-/* 1. SIDEBAR NAVIGATION */
+/* SIDEBAR NAVIGATION */
 .sidebar-tags {
     width: 220px;
     padding: 40px 25px;
@@ -675,11 +667,6 @@ body {
     margin-bottom: 25px;
 }
 
-.tag-list {
-    list-style: none;
-    padding: 0;
-}
-
 .tag-item {
     padding: 10px 0;
     color: #a1a1aa;
@@ -692,20 +679,23 @@ body {
     color: #ffffff;
 }
 
-/* 2. MAIN CONTENT AREA (DETAIL PALETTE) */
-.content-detail-container {
-    flex: 1;
-    padding: 60px 80px;
-    background: #1e1e26;
+/* =========================================
+   6. SPECTRA DETAIL PAGE STYLES (UPDATED)
+   ========================================= */
+
+/* Modifikasi area konten khusus detail agar menyatu dengan background utama */
+.content.content-detail-container {
+    padding: 40px 60px; 
+    background-color: var(--bg-dark); 
 }
 
 /* Bagian atas: Palet Besar & Info Detail */
 .palette-hero {
     display: flex;
-    gap: 120px;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 80px;
+    gap: 60px; /* Jarak antara kotak besar dan list warna lingkaran */
+    align-items: flex-start; /* Sejajar di atas (Rata atas) */
+    justify-content: flex-start; /* Rata kiri */
+    margin-bottom: 20px;
 }
 
 /* Palet Box Besar */
@@ -713,7 +703,7 @@ body {
     width: 550px;
     height: 550px;
     display: flex;
-    border-radius: 35px;
+    border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 20px 50px rgba(0,0,0,0.3);
 }
@@ -721,77 +711,95 @@ body {
 .palette-column {
     flex: 1;
     height: 100%;
-    transition: transform 0.3s ease;
-}
-
-.palette-column:hover {
-    flex: 1.2; /* Animasi dikit pas hover ke warna tertentu */
+    transition: transform 0.3s ease, flex 0.3s ease;
+    cursor: pointer;
 }
 
 /* List Detail Bulat (Kanan) */
 .palette-color-info-list {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    gap: 22px; 
+    padding-top: 10px; /* Menurunkan sedikit agar sejajar secara visual dengan kotak kiri */
 }
 
 .color-detail-item {
     display: flex;
     align-items: center;
     gap: 20px;
+    cursor: pointer;
 }
 
 .color-preview-circle {
-    width: 100px;
-    height: 100px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.1);
+    border: 2px solid rgba(255,255,255,0.05);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .color-value-text {
     display: flex;
     flex-direction: column;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid transparent; 
+    transition: all 0.3s ease;
+}
+
+/* Efek outline saat list warna di-hover atau aktif (seperti di gambar) */
+.color-detail-item:hover .color-value-text {
+    border: 1px solid rgba(255,255,255,0.2);
+    background-color: rgba(255,255,255,0.02);
 }
 
 .color-value-text span {
     font-size: 14px;
-    color: #71717a;
+    color: var(--text-muted);
     font-weight: 500;
+    display: flex;
+    align-items: center;
 }
 
 .color-value-text strong {
     font-size: 18px;
-    color: #ffffff;
+    color: var(--text-main);
     margin-top: 4px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* 3. BUTTONS (LIKE, IMAGE, LINK) */
+/* Pembungkus Aksi & Tags (Lebarnya disamakan dengan kotak palet 550px) */
+.palette-actions-wrapper {
+    max-width: 550px;
+}
+
+/* BUTTONS (LIKE, IMAGE, LINK) */
 .palette-actions {
     display: flex;
-    gap: 20px;
-    margin-top: 40px;
-    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 30px;
+    justify-content: space-between; /* Menyebar rata tombolnya */
 }
 
 .btn-spectra {
+    flex: 1; /* Tombol membagi lebar secara merata */
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    padding: 12px 30px;
-    border-radius: 14px;
-    background: #27272a;
-    border: 1px solid #3f3f46;
-    color: #e4e4e7;
+    padding: 12px 0;
+    border-radius: 12px;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
     font-size: 15px;
     cursor: pointer;
     transition: all 0.2s ease;
 }
 
 .btn-spectra:hover {
-    background: #3f3f46;
-    border-color: #52525b;
+    background: var(--bg-hover);
 }
 
 .btn-like {
@@ -804,16 +812,17 @@ body {
     color: white;
 }
 
-/* 4. SECTION SIMILAR PALETTES (BAWAH) */
+/* SECTION SIMILAR PALETTES (BAWAH) */
 .more-similar-section {
-    border-top: 1px solid #2d2d3a;
+    border-top: 1px solid var(--border-color);
     padding-top: 50px;
+    margin-top: 60px;
 }
 
 .section-title {
     text-align: center;
     font-size: 24px;
-    color: #a1a1aa;
+    color: var(--text-muted);
     margin-bottom: 40px;
     font-weight: 400;
 }
@@ -837,4 +846,3 @@ body {
 .similar-palette-card:hover {
     transform: translateY(-5px);
 }
-/* --- AKHIR KODE DETAIL PAGE --- */
