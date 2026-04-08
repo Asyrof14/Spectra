@@ -1,7 +1,4 @@
-// $host = "sql207.infinityfree.com";
-// $user = "if0_41506027";
-// $pass = "Spectra0987";
-// $db   = "if0_41506027_spectra"; 
+
 
 <?php
 // 1. FUNGSI PEMBACA FILE .env
@@ -25,6 +22,10 @@ if (file_exists($envFilePath)) {
         }
     }
 }
+// $host = "sql207.infinityfree.com";
+// $user = "if0_41506027";
+// $pass = "Spectra0987";
+// $db   = "if0_41506027_spectra"; 
 
 // 2. AMBIL DATA DARI ENVIRONMENT
 define('GEMINI_API_KEY', getenv('GEMINI_API_KEY'));
