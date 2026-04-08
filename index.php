@@ -34,7 +34,7 @@ function generateAIPalettes() {
 
     if ($httpCode !== 200) {
         echo "<div style='background:red;color:white;padding:20px;border:2px solid black;margin:20px;'>";
-        echo "<h3>🚨 GOOGLE MENOLAK (Error $httpCode)</h3>";
+        echo "<h3> (Error $httpCode)</h3>";
         echo isset($responseData['error']['message']) ? "Pesan: " . $responseData['error']['message'] : "Respon Mentah: " . htmlspecialchars($response);
         echo "</div>";
         return [];

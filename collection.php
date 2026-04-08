@@ -43,7 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $colors = $_POST['colors'];
     $raw_tags = isset($_POST['tags']) ? $_POST['tags'] : ['AI Generated'];
 
-    // ✅ FIX BUG 2: Cek duplikat di server sebelum INSERT
     // Jika user sudah punya palette dengan 5 warna yang sama persis, tolak
     $dupCheck = $conn->prepare(
         "SELECT id FROM palettes 
