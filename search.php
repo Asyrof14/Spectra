@@ -12,8 +12,7 @@ $palettes = [];
 function searchAIPalettes($keyword) {
     if (!defined('GEMINI_API_KEY') || empty(GEMINI_API_KEY) || empty($keyword)) return [];
 
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . GEMINI_API_KEY;
-    
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" . GEMINI_API_KEY;
     // Prompt Pintar: Meminta Object JSON dengan tag yang sangat berkaitan dengan keyword pencarian
     $prompt = "Generate exactly 20 color palettes strongly inspired by the theme: '{$keyword}'. For each palette, provide exactly 5 hex color codes and 3 descriptive single-word tags where at least one tag is closely related to '{$keyword}'. Output ONLY a valid JSON array of objects. No markdown, no explanation. Example: [{\"colors\":[\"#111111\",\"#222222\",\"#333333\",\"#444444\",\"#555555\"], \"tags\":[\"{$keyword}\", \"Dark\", \"Night\"]}]";
 

@@ -11,8 +11,8 @@ function generateAIPalettes() {
         echo "<div style='background:orange; padding:10px;'>API Key belum di-set di config.php!</div>";
         return [];
     }
-
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . GEMINI_API_KEY;
+    
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" . GEMINI_API_KEY;
     
     // Prompt baru: Meminta 15 palet dengan 5 warna dan 3 tags per palet
     $prompt = 'Generate exactly 15 color palettes. For each palette, provide exactly 5 hex color codes and 3 descriptive single-word tags (e.g., "Ocean", "Dark", "Cyberpunk"). Output ONLY a valid JSON array of objects. No markdown, no explanation. Example: [{"colors":["#111111","#222222","#333333","#444444","#555555"], "tags":["Dark", "Monochrome", "Night"]}]';
