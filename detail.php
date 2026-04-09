@@ -144,6 +144,9 @@ if (!empty($_SESSION['ai_palettes']) && is_array($_SESSION['ai_palettes'])) {
                     </div>
                     <ul class="profile-links">
                         <li><a href="collection.php">Collection</a></li>
+                        <li><a href="about.php">About</a></li>
+                        <li><a href="terms.php">Term of Service</a></li>
+                        <li><a href="privacy.php">Privacy Policy</a></li>
                         <li><a href="logout.php" style="color:#ff4757;">Logout</a></li>
                     </ul>
                 </div>
