@@ -6,57 +6,94 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
-$query = isset($_GET['q']) ? trim($_GET['q']) : '';
-$palettes = [];
+function generateAIPalettes() {
+    if (!defined('GEMINI_API_KEY') || empty(GEMINI_API_KEY)) {
+        echo "<div style='background:orange; padding:10px;'>API Key belum di-set di config.php!</div>";
+        return [];
+    }
 
-function searchAIPalettes($keyword) {
-    if (!defined('GEMINI_API_KEY') || empty(GEMINI_API_KEY) || empty($keyword)) return [];
+    // Gunakan streamGenerateContent agar response diterima per-chunk, tidak timeout
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:streamGenerateContent?alt=sse&key=" . GEMINI_API_KEY;
 
-    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" . GEMINI_API_KEY;
-    // Prompt Pintar: Meminta Object JSON dengan tag yang sangat berkaitan dengan keyword pencarian
-    $prompt = "Generate exactly 20 color palettes strongly inspired by the theme: '{$keyword}'. For each palette, provide exactly 5 hex color codes and 3 descriptive single-word tags where at least one tag is closely related to '{$keyword}'. Output ONLY a valid JSON array of objects. No markdown, no explanation. Example: [{\"colors\":[\"#111111\",\"#222222\",\"#333333\",\"#444444\",\"#555555\"], \"tags\":[\"{$keyword}\", \"Dark\", \"Night\"]}]";
+    $prompt = 'Generate exactly 10 color palettes. For each palette, provide exactly 5 hex color codes and 3 descriptive single-word tags (e.g., "Ocean", "Dark", "Cyberpunk"). Output ONLY a valid JSON array of objects. No markdown, no explanation. Example: [{"colors":["#111111","#222222","#333333","#444444","#555555"], "tags":["Dark", "Monochrome", "Night"]}]';
 
     $data = ["contents" => [["parts" => [["text" => $prompt]]]]];
 
+    // Buffer untuk menampung semua chunk SSE yang masuk
+    $rawBuffer = '';
+
     $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
-    $response = curl_exec($ch);
+    // Tangkap setiap chunk SSE ke buffer, jangan tunggu selesai semua
+    curl_setopt($ch, CURLOPT_WRITEFUNCTION, function($ch, $chunk) use (&$rawBuffer) {
+        $rawBuffer .= $chunk;
+        return strlen($chunk); // harus return panjang chunk agar cURL tidak error
+    });
+
+    curl_exec($ch);
+    $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    $curlError = curl_error($ch);
     curl_close($ch);
 
-    $responseData = json_decode($response, true);
-    if (isset($responseData['candidates'][0]['content']['parts'][0]['text'])) {
-        $aiText = $responseData['candidates'][0]['content']['parts'][0]['text'];
-        $start = strpos($aiText, '[');
-        $end = strrpos($aiText, ']');
-        if ($start !== false && $end !== false) {
-            $jsonString = substr($aiText, $start, $end - $start + 1);
-            $palettesArray = json_decode($jsonString, true);
-            if (json_last_error() === JSON_ERROR_NONE && is_array($palettesArray)) {
-                return $palettesArray;
-            }
-        }
+    if ($curlError) {
+        echo "<div style='background:red;color:white;padding:20px;border:2px solid black;margin:20px;'>";
+        echo "<h3>cURL Error</h3><p>" . htmlspecialchars($curlError) . "</p>";
+        echo "</div>";
+        return [];
     }
-    return [];
+
+    if ($httpCode !== 200) {
+        preg_match('/\{.*\}/s', $rawBuffer, $matches);
+        $errData = $matches ? json_decode($matches[0], true) : null;
+        $errMsg  = $errData['error']['message'] ?? htmlspecialchars(substr($rawBuffer, 0, 300));
+
+        echo "<div style='background:red;color:white;padding:20px;border:2px solid black;margin:20px;'>";
+        echo "<h3>Error $httpCode</h3><p>$errMsg</p>";
+        echo "</div>";
+        return [];
+    }
+
+    // Parse SSE: setiap baris dimulai dengan "data: {...}"
+    // Gabungkan semua field "text" dari setiap chunk menjadi satu string
+    $fullText = '';
+    foreach (explode("\n", $rawBuffer) as $line) {
+        $line = trim($line);
+        if (strpos($line, 'data:') !== 0) continue;
+
+        $json = trim(substr($line, 5)); // hapus "data: " di depan
+        if ($json === '[DONE]') break;
+
+        $chunk = json_decode($json, true);
+        $piece = $chunk['candidates'][0]['content']['parts'][0]['text'] ?? '';
+        $fullText .= $piece;
+    }
+
+    // Bersihkan markdown fence jika ada (``` atau ```json)
+    $fullText = trim(preg_replace('/^```(?:json)?\s*/i', '', preg_replace('/\s*```$/m', '', $fullText)));
+
+    $palettes = json_decode($fullText, true);
+    return is_array($palettes) ? $palettes : [];
 }
 
-if (!empty($query)) {
-    $palettes = searchAIPalettes($query);
+if (isset($_GET['reset'])) unset($_SESSION['ai_palettes']);
+if (!isset($_SESSION['ai_palettes']) || empty($_SESSION['ai_palettes'])) {
+    $_SESSION['ai_palettes'] = generateAIPalettes();
 }
+$palettes = $_SESSION['ai_palettes'];
 
 function isPaletteSaved($conn, $user_id, $colors) {
-    // Kita cek apakah ada palet dengan kombinasi 5 warna yang sama untuk user ini
     $query = "SELECT id FROM palettes WHERE user_id = ? 
               AND color1 = ? AND color2 = ? AND color3 = ? AND color4 = ? AND color5 = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("isssss", $user_id, $colors[0], $colors[1], $colors[2], $colors[3], $colors[4]);
     $stmt->execute();
     $result = $stmt->get_result();
-    return $result->num_rows > 0; // Mengembalikan true jika sudah disimpan
+    return $result->num_rows > 0;
 }
 ?>
 
@@ -65,16 +102,16 @@ function isPaletteSaved($conn, $user_id, $colors) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search - Spectra</title>
+    <title>Spectra - Color Palettes</title>
     <link rel="stylesheet" href="css/Style.css?v=<?php echo filemtime('css/Style.css'); ?>">
 </head>
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
         <div class="nav-left">
             <img class="logo" src="assets/SpectraLogo.svg" alt="Spectra">
         </div>
-        <form action="search.php" method="GET" class="nav-search-static">
+        <form action="search.php" method="GET" class="nav-search-wrapper" id="nav-search-wrapper">
             <input type="text" name="q" placeholder="Try search something fancy?">
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         </form>
@@ -128,22 +165,29 @@ function isPaletteSaved($conn, $user_id, $colors) {
         <main class="content" id="scroll-content">
             <section class="hero">
                 <div class="hero-text">
-                    <h1>Your Search<?php echo $query ? ': <em style="font-style:italic;opacity:0.7;">' . htmlspecialchars($query) . '</em>' : ''; ?></h1>
+                    <h1>The Simplest Way to Choose Your Brand Colors</h1>
+                    <p>Explore thousands of curated color palettes generated by AI and find the exact shades that bring your creative vision to life.</p>
                 </div>
+            </section>
+
+            <section class="search-container" id="main-search-container">
+                <form action="search.php" method="GET" class="search-box">
+                    <input type="text" name="q" placeholder="Try search something fancy?" required>
+                    <button type="submit" style="background:none;border:none;outline:none;cursor:pointer;display:flex;align-items:center;padding:0;">
+                        <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                    </button>
+                </form>
             </section>
 
             <section class="palette-grid">
                 <?php if (!empty($palettes) && is_array($palettes)): ?>
                     <?php foreach ($palettes as $paletteData): ?>
                         <?php 
-                            // 1. Pastikan data valid dulu
                             if (!is_array($paletteData) || !isset($paletteData['colors'])) continue; 
                             
-                            // 2. AMBIL WARNA DULU (Ini yang tadi terbalik urutannya)
                             $colors = $paletteData['colors'];
                             $tags = isset($paletteData['tags']) && is_array($paletteData['tags']) ? $paletteData['tags'] : ['Spectra']; 
 
-                            // 3. BARU CEK STATUS KE DATABASE
                             $savedClass = '';
                             $isSaved = false;
                             if (isPaletteSaved($conn, $_SESSION['user_id'], $colors)) {
@@ -151,39 +195,8 @@ function isPaletteSaved($conn, $user_id, $colors) {
                                 $isSaved = true;
                             }
 
-                            // Siapkan query dan payload
                             $colorQuery = http_build_query(['c' => $colors, 't' => $tags]);
                             $savePayload = htmlspecialchars(json_encode(['colors' => $colors, 'tags' => $tags]), ENT_QUOTES); 
-                        ?>
-                        <?php 
-                            if (!is_array($paletteData) || !isset($paletteData['colors'])) continue;
-                            
-                            $colors = $paletteData['colors'];
-                            $tags = isset($paletteData['tags']) && is_array($paletteData['tags']) ? $paletteData['tags'] : []; 
-                            
-                            // ==========================================
-                            // LOGIKA "PAKSA TAG" Sesuai Kata Kunci
-                            // ==========================================
-                            $keywordMatch = false;
-                            foreach ($tags as $t) {
-                                if (strtolower(trim($t)) === strtolower(trim($query))) {
-                                    $keywordMatch = true;
-                                    break;
-                                }
-                            }
-
-                            // Jika AI "lupa" masukin tag utama, kita paksa taruh di paling depan!
-                            if (!$keywordMatch && !empty($query)) {
-                                array_unshift($tags, ucwords(strtolower($query))); 
-                                // Kalau tagnya kepanjangan (jadi 4), kita buang yang paling belakang biar tetap 3
-                                if (count($tags) > 3) {
-                                    array_pop($tags);
-                                }
-                            }
-                            // ==========================================
-
-                            $colorQuery = http_build_query(['c' => $colors, 't' => $tags]); 
-                            $savePayload = htmlspecialchars(json_encode(['colors' => $colors, 'tags' => $tags]), ENT_QUOTES);
                         ?>
                         <div class="palette-card">
                             <div class="colors">
@@ -211,25 +224,32 @@ function isPaletteSaved($conn, $user_id, $colors) {
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <p style="text-align:center;width:100%;color:#888;">
-                        <?php echo $query ? 'Mencari palet untuk "' . htmlspecialchars($query) . '"...' : 'Ketik sesuatu di kolom pencarian di atas.'; ?>
-                    </p>
+                    <p style="text-align:center;width:100%;color:#888;">AI sedang berpikir... Coba refresh halaman jika palet tidak muncul.</p>
                 <?php endif; ?>
             </section>
 
-            <?php if (!empty($palettes)): ?>
             <div class="generate-btn-container">
-                <a href="search.php?q=<?php echo urlencode($query); ?>" class="btn-generate">
+                <a href="index.php?reset=1" class="btn-generate">
                     <svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6c3.31 0 6 2.69 6 6 0 1.01-.25 1.97-.7 2.8l1.46 1.46C19.54 15.03 20 13.57 20 12c0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-1.01.25-1.97.7-2.8L5.24 7.74C4.46 8.97 4 10.43 4 12c0 4.42 3.58 8 8 8v3l4-4-4-4v3z"/></svg>
-                    Regenerate "<?php echo htmlspecialchars($query); ?>"
+                    Generate New Palettes
                 </a>
             </div>
-            <?php endif; ?>
         </main>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const scrollContent = document.getElementById('scroll-content');
+            const mainSearch = document.getElementById('main-search-container');
+            const navSearchWrapper = document.getElementById('nav-search-wrapper');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    navSearchWrapper.classList.toggle('active', !entry.isIntersecting);
+                });
+            }, { root: scrollContent, threshold: 0 });
+            if (mainSearch) observer.observe(mainSearch);
+
             const profileBtn = document.getElementById('profile-btn');
             const profileDropdown = document.getElementById('profile-dropdown');
             profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
@@ -250,32 +270,33 @@ function isPaletteSaved($conn, $user_id, $colors) {
             });
 
             document.querySelectorAll('.save-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn.addEventListener('click', function () {
                     if (this.dataset.saved === 'true' || this.dataset.sending === 'true') return;
                     this.dataset.sending = 'true';
 
                     const payload = JSON.parse(this.dataset.payload);
                     const formData = new URLSearchParams();
+                    
                     formData.append('action', 'save');
                     payload.colors.forEach(color => formData.append('colors[]', color));
-                    payload.tags.forEach(tag => formData.append('tags[]', tag)); 
+                    payload.tags.forEach(tag => formData.append('tags[]', tag));
 
                     fetch('collection.php', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         body: formData.toString()
                     })
-                    .then(response => response.json())
+                    .then(r => r.json())
                     .then(data => {
                         if (data.status === 'success' || data.status === 'already_saved') {
                             this.classList.add('is-saved');
                             this.dataset.saved = 'true';
                         } else {
-                            this.dataset.sending = 'false';
                             alert('Gagal simpan: ' + (data.message || 'Coba login ulang'));
+                            this.dataset.sending = 'false';
                         }
                     })
-                    .catch(() => { this.dataset.sending = 'false'; });
+                    .catch(err => { console.error('Error:', err); this.dataset.sending = 'false'; });
                 });
             });
         });
