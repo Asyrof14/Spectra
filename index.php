@@ -6,13 +6,23 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+<<<<<<< HEAD
+=======
+$user_id = $_SESSION['user_id'];
+$profilePath = getProfilePath($conn, $user_id);
+
+>>>>>>> d13217a (update profil)
 function generateAIPalettes() {
     if (!defined('GEMINI_API_KEY') || empty(GEMINI_API_KEY)) {
         echo "<div style='background:orange; padding:10px;'>API Key belum di-set di config.php!</div>";
         return [];
     }
     
+<<<<<<< HEAD
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=" . GEMINI_API_KEY;
+=======
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=" . GEMINI_API_KEY;
+>>>>>>> d13217a (update profil)
     
     // Prompt baru: Meminta 15 palet dengan 5 warna dan 3 tags per palet
     $prompt = 'Generate exactly 10 color palettes. For each palette, provide exactly 5 hex color codes and 3 descriptive single-word tags (e.g., "Ocean", "Dark", "Cyberpunk"). Output ONLY a valid JSON array of objects. No markdown, no explanation. Example: [{"colors":["#111111","#222222","#333333","#444444","#555555"], "tags":["Dark", "Monochrome", "Night"]}]';
@@ -90,6 +100,7 @@ function isPaletteSaved($conn, $user_id, $colors) {
         <div class="nav-right">
             <div class="profile-menu-container">
                 <div class="profile-btn" id="profile-btn">
+<<<<<<< HEAD
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 <div class="profile-dropdown" id="profile-dropdown">
@@ -99,6 +110,21 @@ function isPaletteSaved($conn, $user_id, $colors) {
                         </div>
                         <div class="profile-name"><?php echo htmlspecialchars($_SESSION['username']); ?></div>
                     </div>
+=======
+                    <img src="<?php echo $profilePath; ?>">
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="profile.php" class="profile-info-link">
+                        <div class="profile-info">
+                            <div class="profile-avatar-large">
+                                <img src="<?php echo $profilePath; ?>">
+                            </div>
+                            <div class="profile-name">
+                                <?php echo htmlspecialchars($_SESSION['username']); ?>
+                            </div>
+                        </div>
+                    </a>
+>>>>>>> d13217a (update profil)
                     <ul class="profile-links">
                         <li><a href="collection.php">Collection</a></li>
                         <li><a href="about.php">About</a></li>

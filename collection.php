@@ -12,6 +12,10 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+<<<<<<< HEAD
+=======
+$profilePath = getProfilePath($conn, $user_id);
+>>>>>>> d13217a (update profil)
 
 // ==========================================
 // 2A. LOGIKA DELETE
@@ -126,6 +130,7 @@ $saved_palettes = $stmt_fetch->get_result()->fetch_all(MYSQLI_ASSOC);
         <div class="nav-right">
             <div class="profile-menu-container">
                 <div class="profile-btn" id="profile-btn">
+<<<<<<< HEAD
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 <div class="profile-dropdown" id="profile-dropdown">
@@ -135,6 +140,21 @@ $saved_palettes = $stmt_fetch->get_result()->fetch_all(MYSQLI_ASSOC);
                         </div>
                         <div class="profile-name"><?php echo htmlspecialchars($_SESSION['username']); ?></div>
                     </div>
+=======
+                    <img src="<?php echo $profilePath; ?>">
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="profile.php" class="profile-info-link">
+                        <div class="profile-info">
+                            <div class="profile-avatar-large">
+                                <img src="<?php echo $profilePath; ?>">
+                            </div>
+                            <div class="profile-name">
+                                <?php echo htmlspecialchars($_SESSION['username']); ?>
+                            </div>
+                        </div>
+                    </a>
+>>>>>>> d13217a (update profil)
                     <ul class="profile-links">
                         <li><a href="collection.php">Collection</a></li>
                         <li><a href="about.php">About</a></li>
@@ -142,6 +162,10 @@ $saved_palettes = $stmt_fetch->get_result()->fetch_all(MYSQLI_ASSOC);
                         <li><a href="privacy.php">Privacy Policy</a></li>
                         <li><a href="logout.php" style="color:#ff4757;">Logout</a></li>
                     </ul>
+<<<<<<< HEAD
+=======
+
+>>>>>>> d13217a (update profil)
                 </div>
             </div>
         </div>

@@ -6,12 +6,23 @@ if (!isset($_SESSION['user_id'])) {
     exit;
 }
 
+<<<<<<< HEAD
 function generateAIPalettes() {
+=======
+$user_id = $_SESSION['user_id'];
+$profilePath = getProfilePath($conn, $user_id);
+
+// Menangkap query pencarian jika ada
+$searchQuery = isset($_GET['q']) ? trim($_GET['q']) : '';
+
+function generateAIPalettes($query = '') {
+>>>>>>> d13217a (update profil)
     if (!defined('GEMINI_API_KEY') || empty(GEMINI_API_KEY)) {
         echo "<div style='background:orange; padding:10px;'>API Key belum di-set di config.php!</div>";
         return [];
     }
 
+<<<<<<< HEAD
     // Gunakan streamGenerateContent agar response diterima per-chunk, tidak timeout
     $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:streamGenerateContent?alt=sse&key=" . GEMINI_API_KEY;
 
@@ -21,11 +32,28 @@ function generateAIPalettes() {
 
     // Buffer untuk menampung semua chunk SSE yang masuk
     $rawBuffer = '';
+=======
+    // Menggunakan endpoint generateContent biasa agar parsing stabil & cepat
+    $url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=" . GEMINI_API_KEY;
+
+    // Prompt diringkas & dibuat dinamis mengikuti input pencarian ($query)
+    $context = !empty($query) ? "theme/vibe: '$query'" : "random creative themes";
+    $prompt = "Generate 10 color palettes for $context. Return ONLY a JSON array of objects. 
+    Format: [{\"colors\":[\"#hex1\",...], \"tags\":[\"tag1\",...]}]";
+
+    $data = [
+        "contents" => [["parts" => [["text" => $prompt]]]],
+        "generationConfig" => [
+            "responseMimeType" => "application/json" // Memaksa Gemini mengembalikan JSON murni
+        ]
+    ];
+>>>>>>> d13217a (update profil)
 
     $ch = curl_init($url);
     curl_setopt($ch, CURLOPT_POST, true);
     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
     curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+<<<<<<< HEAD
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
     curl_setopt($ch, CURLOPT_TIMEOUT, 60);
 
@@ -36,10 +64,18 @@ function generateAIPalettes() {
     });
 
     curl_exec($ch);
+=======
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+
+    $response = curl_exec($ch);
+>>>>>>> d13217a (update profil)
     $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     $curlError = curl_error($ch);
     curl_close($ch);
 
+<<<<<<< HEAD
     if ($curlError) {
         echo "<div style='background:red;color:white;padding:20px;border:2px solid black;margin:20px;'>";
         echo "<h3>cURL Error</h3><p>" . htmlspecialchars($curlError) . "</p>";
@@ -75,11 +111,25 @@ function generateAIPalettes() {
 
     // Bersihkan markdown fence jika ada (``` atau ```json)
     $fullText = trim(preg_replace('/^```(?:json)?\s*/i', '', preg_replace('/\s*```$/m', '', $fullText)));
+=======
+    if ($curlError || $httpCode !== 200) {
+        echo "<div style='background:red;color:white;padding:10px;margin:10px;'>Gagal mengambil data dari AI (Code: $httpCode)</div>";
+        return [];
+    }
+
+    $resData = json_decode($response, true);
+    $fullText = $resData['candidates'][0]['content']['parts'][0]['text'] ?? '';
+
+    // fallback jika teks mengandung markdown fence
+    $fullText = trim(preg_replace('/^```(?:json)?\s*/i', '', preg_replace('/\s*
+```$/m', '', $fullText)));
+>>>>>>> d13217a (update profil)
 
     $palettes = json_decode($fullText, true);
     return is_array($palettes) ? $palettes : [];
 }
 
+<<<<<<< HEAD
 if (isset($_GET['reset'])) unset($_SESSION['ai_palettes']);
 if (!isset($_SESSION['ai_palettes']) || empty($_SESSION['ai_palettes'])) {
     $_SESSION['ai_palettes'] = generateAIPalettes();
@@ -87,6 +137,22 @@ if (!isset($_SESSION['ai_palettes']) || empty($_SESSION['ai_palettes'])) {
 $palettes = $_SESSION['ai_palettes'];
 
 function isPaletteSaved($conn, $user_id, $colors) {
+=======
+// Logika reset atau pencarian baru
+if (isset($_GET['reset']) || !empty($searchQuery)) {
+    // Jika ada kata kunci pencarian, generate langsung berdasarkan keyword tersebut
+    $_SESSION['ai_palettes'] = generateAIPalettes($searchQuery);
+}
+
+if (!isset($_SESSION['ai_palettes']) || empty($_SESSION['ai_palettes'])) {
+    $_SESSION['ai_palettes'] = generateAIPalettes();
+}
+
+$palettes = $_SESSION['ai_palettes'];
+
+function isPaletteSaved($conn, $user_id, $colors) {
+    if (count($colors) < 5) return false;
+>>>>>>> d13217a (update profil)
     $query = "SELECT id FROM palettes WHERE user_id = ? 
               AND color1 = ? AND color2 = ? AND color3 = ? AND color4 = ? AND color5 = ?";
     $stmt = $conn->prepare($query);
@@ -111,8 +177,14 @@ function isPaletteSaved($conn, $user_id, $colors) {
         <div class="nav-left">
             <img class="logo" src="assets/SpectraLogo.svg" alt="Spectra">
         </div>
+<<<<<<< HEAD
         <form action="search.php" method="GET" class="nav-search-wrapper" id="nav-search-wrapper">
             <input type="text" name="q" placeholder="Try search something fancy?">
+=======
+        <!-- Search bar di navbar diubah action-nya ke index.php agar memicu AI -->
+        <form action="index.php" method="GET" class="nav-search-wrapper" id="nav-search-wrapper">
+            <input type="text" name="q" value="<?php echo htmlspecialchars($searchQuery); ?>" placeholder="Search theme with AI (e.g. Cyberpunk, Pastel)...">
+>>>>>>> d13217a (update profil)
             <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
         </form>
         <div class="nav-links">
@@ -122,6 +194,7 @@ function isPaletteSaved($conn, $user_id, $colors) {
         <div class="nav-right">
             <div class="profile-menu-container">
                 <div class="profile-btn" id="profile-btn">
+<<<<<<< HEAD
                     <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
                 </div>
                 <div class="profile-dropdown" id="profile-dropdown">
@@ -131,6 +204,21 @@ function isPaletteSaved($conn, $user_id, $colors) {
                         </div>
                         <div class="profile-name"><?php echo htmlspecialchars($_SESSION['username']); ?></div>
                     </div>
+=======
+                    <img src="<?php echo $profilePath; ?>">
+                </div>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="profile.php" class="profile-info-link">
+                        <div class="profile-info">
+                            <div class="profile-avatar-large">
+                                <img src="<?php echo $profilePath; ?>">
+                            </div>
+                            <div class="profile-name">
+                                <?php echo htmlspecialchars($_SESSION['username'] ?? 'User'); ?>
+                            </div>
+                        </div>
+                    </a>
+>>>>>>> d13217a (update profil)
                     <ul class="profile-links">
                         <li><a href="collection.php">Collection</a></li>
                         <li><a href="about.php">About</a></li>
@@ -147,6 +235,7 @@ function isPaletteSaved($conn, $user_id, $colors) {
         <aside class="sidebar">
             <div class="tag">Popular Tags</div>
             <ul class="tag-list">
+<<<<<<< HEAD
                 <li><a href="search.php?q=Dark">Dark</a></li>
                 <li><a href="search.php?q=Light">Light</a></li>
                 <li><a href="search.php?q=Cold">Cold</a></li>
@@ -159,6 +248,21 @@ function isPaletteSaved($conn, $user_id, $colors) {
                 <li><a href="search.php?q=Sad">Sad</a></li>
                 <li><a href="search.php?q=Ocean">Ocean</a></li>
                 <li><a href="search.php?q=Space">Space</a></li>
+=======
+                <!-- Tag populer diarahkan ke index.php?q= agar dicari lewat AI -->
+                <li><a href="index.php?q=Dark">Dark</a></li>
+                <li><a href="index.php?q=Light">Light</a></li>
+                <li><a href="index.php?q=Cold">Cold</a></li>
+                <li><a href="index.php?q=Warm">Warm</a></li>
+                <li><a href="index.php?q=Summer">Summer</a></li>
+                <li><a href="index.php?q=Fall">Fall</a></li>
+                <li><a href="index.php?q=Winter">Winter</a></li>
+                <li><a href="index.php?q=Spring">Spring</a></li>
+                <li><a href="index.php?q=Happy">Happy</a></li>
+                <li><a href="index.php?q=Sad">Sad</a></li>
+                <li><a href="index.php?q=Ocean">Ocean</a></li>
+                <li><a href="index.php?q=Space">Space</a></li>
+>>>>>>> d13217a (update profil)
             </ul>
         </aside>
 
@@ -171,14 +275,30 @@ function isPaletteSaved($conn, $user_id, $colors) {
             </section>
 
             <section class="search-container" id="main-search-container">
+<<<<<<< HEAD
                 <form action="search.php" method="GET" class="search-box">
                     <input type="text" name="q" placeholder="Try search something fancy?" required>
+=======
+                <!-- Search box utama diubah action-nya ke index.php -->
+                <form action="index.php" method="GET" class="search-box">
+                    <input type="text" name="q" value="<?php echo htmlspecialchars($searchQuery); ?>" placeholder="Ask AI for something fancy (e.g., Retro Neon, Cozy Autumn)..." required>
+>>>>>>> d13217a (update profil)
                     <button type="submit" style="background:none;border:none;outline:none;cursor:pointer;display:flex;align-items:center;padding:0;">
                         <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
                     </button>
                 </form>
             </section>
 
+<<<<<<< HEAD
+=======
+            <?php if (!empty($searchQuery)): ?>
+                <div style="margin: 0 0 20px 0; color: #555;">
+                    Menampilkan hasil pencarian AI untuk: <strong>"<?php echo htmlspecialchars($searchQuery); ?>"</strong> 
+                    | <a href="index.php" style="color:#ff4757; text-decoration:none;">Clear Search</a>
+                </div>
+            <?php endif; ?>
+
+>>>>>>> d13217a (update profil)
             <section class="palette-grid">
                 <?php if (!empty($palettes) && is_array($palettes)): ?>
                     <?php foreach ($palettes as $paletteData): ?>
@@ -224,7 +344,11 @@ function isPaletteSaved($conn, $user_id, $colors) {
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
+<<<<<<< HEAD
                     <p style="text-align:center;width:100%;color:#888;">AI sedang berpikir... Coba refresh halaman jika palet tidak muncul.</p>
+=======
+                    <p style="text-align:center;width:100%;color:#888;">AI tidak berhasil menemukan palet untuk tema tersebut. Coba kata kunci lain.</p>
+>>>>>>> d13217a (update profil)
                 <?php endif; ?>
             </section>
 
@@ -237,6 +361,10 @@ function isPaletteSaved($conn, $user_id, $colors) {
         </main>
     </div>
 
+<<<<<<< HEAD
+=======
+    <!-- Script JavaScript Anda tetap sama dan berfungsi dengan baik -->
+>>>>>>> d13217a (update profil)
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const scrollContent = document.getElementById('scroll-content');
@@ -252,9 +380,17 @@ function isPaletteSaved($conn, $user_id, $colors) {
 
             const profileBtn = document.getElementById('profile-btn');
             const profileDropdown = document.getElementById('profile-dropdown');
+<<<<<<< HEAD
             profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
             document.addEventListener('click', (e) => {
                 if (!profileBtn.contains(e.target) && !profileDropdown.contains(e.target))
+=======
+            if(profileBtn) {
+                profileBtn.addEventListener('click', (e) => { e.stopPropagation(); profileDropdown.classList.toggle('show'); });
+            }
+            document.addEventListener('click', (e) => {
+                if (profileBtn && !profileBtn.contains(e.target) && !profileDropdown.contains(e.target))
+>>>>>>> d13217a (update profil)
                     profileDropdown.classList.remove('show');
             });
 

@@ -44,7 +44,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
+<<<<<<< HEAD
   overflow: hidden;
+=======
+
+  overflow: hidden; /* penting: matikan scroll global */
+>>>>>>> d13217a (update profil)
 }
 
 /* =========================================
@@ -63,6 +68,13 @@ a.action-btn:visited {
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
+<<<<<<< HEAD
+=======
+  background: transparent; /* Menghilangkan latar belakang putih/abu-abu */
+  border: none;            /* Menghilangkan border bawaan button */
+  padding: 0;             /* Menghilangkan padding bawaan agar ukurannya pas */
+  outline: none;           /* Menghilangkan garis biru saat tombol diklik */
+>>>>>>> d13217a (update profil)
 }
 
 .action-btn svg {
@@ -313,6 +325,7 @@ a.action-btn:visited {
 .profile-btn {
   width: 40px;
   height: 40px;
+<<<<<<< HEAD
   background-color: var(--text-main);
   border-radius: 50%;
   display: flex;
@@ -320,6 +333,11 @@ a.action-btn:visited {
   align-items: center;
   cursor: pointer;
   transition: opacity 0.3s;
+=======
+  border-radius: 50%;
+  overflow: hidden;
+  background: transparent;
+>>>>>>> d13217a (update profil)
 }
 .profile-btn:hover {
   opacity: 0.8;
@@ -350,13 +368,26 @@ a.action-btn:visited {
   visibility: visible;
   transform: translateY(0);
 }
+<<<<<<< HEAD
 
+=======
+.profile-info-link{
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.profile-info-link:hover{
+    opacity: 0.9;
+}
+>>>>>>> d13217a (update profil)
 .profile-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
 }
+<<<<<<< HEAD
 .profile-avatar-large {
   width: 65px;
   height: 65px;
@@ -372,6 +403,9 @@ a.action-btn:visited {
   height: 35px;
   fill: var(--bg-dark);
 }
+=======
+
+>>>>>>> d13217a (update profil)
 .profile-name {
   color: var(--text-main);
   font-size: 1.1rem;
@@ -406,18 +440,33 @@ a.action-btn:visited {
 .main-container {
   display: flex;
   flex: 1;
+<<<<<<< HEAD
   overflow: hidden;
+=======
+
+  height: calc(100vh - 70px); /* tinggi navbar */
+  overflow: hidden; /* biar scroll tidak bocor ke luar */
+>>>>>>> d13217a (update profil)
 }
 
 .sidebar {
   width: 250px;
   border-right: 1px solid var(--border-color);
   padding: 2rem;
+<<<<<<< HEAD
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   overflow-y: auto;
   flex-shrink: 0;
+=======
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+
+  overflow-y: auto; /* scroll di sini */
+>>>>>>> d13217a (update profil)
 }
 
 .sidebar h3 {
@@ -450,7 +499,12 @@ a.action-btn:visited {
 .content {
   flex: 1;
   padding: 2rem 3rem;
+<<<<<<< HEAD
   overflow-y: auto;
+=======
+
+  overflow-y: auto; /* scroll terpisah */
+>>>>>>> d13217a (update profil)
 }
 
 /* =========================================
@@ -965,3 +1019,304 @@ a.action-btn:visited {
     width: 100%;
   }
 }
+<<<<<<< HEAD
+=======
+
+/* =========================
+   PROFILE PAGE STYLE
+========================= */
+
+/* WRAPPER */
+.profile-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+/* LEFT SIDE */
+.profile-left {
+    width: 35%;
+    text-align: center;
+}
+
+.profile-left h1 {
+    font-size: 2.4rem;
+    font-weight: 500;
+    margin-top: 15px;
+}
+
+.profile-left p {
+    color: var(--text-muted);
+    margin-top: 5px;
+}
+
+/* PROFILE IMAGE */
+.profile-image-wrapper {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #d9d9d9;
+    position: relative;
+    cursor: pointer;
+    overflow: visible;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.profile-image:hover {
+    opacity: 0.85;
+}
+
+/* RIGHT SIDE */
+.profile-right {
+    width: 60%;
+}
+
+/* FORM STYLE (LOGIN STYLE ADAPTATION) */
+.profile-right form {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-right label {
+    font-size: 13px;
+    margin-bottom: 6px;
+    margin-top: 10px;
+    color: var(--text-muted);
+}
+
+.profile-right input {
+    width: 100%;
+    padding: 12px 18px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-main);
+    font-size: 14px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.profile-right input:focus {
+    border-color: #6c7bff;
+}
+
+/* PASSWORD ROW */
+.password-row {
+    display: flex;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.password-row .input-group {
+    flex: 1;
+}
+
+/* BUTTONS */
+.profile-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.cancel-btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--text-main);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.cancel-btn:hover {
+    border-color: var(--text-main);
+}
+
+.save-btn {
+    padding: 12px 25px;
+    border-radius: 30px;
+    border: none;
+    background: #dcdcdc;
+    color: #000;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn:hover {
+    background: #ffffff;
+}
+
+/* =========================
+   COLLECTION SECTION
+========================= */
+
+/* =========================================
+   7b. PROFILE COLLECTION SPECIFICS
+   ========================================= */
+.collection-section {
+  margin-top: 50px;
+}
+
+.collection-title {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 20px;
+}
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 25px;
+  padding-bottom: 2rem;
+}
+
+/* Mengatur khusus kartu palet di dalam profil agar bertumpuk horizontal */
+.collection-grid .palette-card {
+  display: flex;
+  flex-direction: column;   /* Menyusun baris warna ke bawah (horizontal blocks) */
+  gap: 0;                   /* Reset gap default 0.8rem agar warna saling menempel rapat */
+  aspect-ratio: 4 / 3;      /* Mengubah proporsi menjadi persegi panjang yang estetik */
+  border-radius: 14px;      /* Sudut membulat halus (smooth rounded corners) */
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.collection-grid .palette-card:hover {
+  transform: scale(1.04);
+}
+
+/* Memastikan tiap baris warna mengisi penuh ruang kartu */
+.collection-grid .color-strip {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+}
+/* SEE MORE BUTTON */
+.more-btn {
+    display: block;
+    width: fit-content;
+    margin: 5px auto 0;
+    padding: 10px 25px;
+    border-radius: 25px;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.more-btn:hover {
+    border-color: var(--text-main);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+    .profile-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-left,
+    .profile-right {
+        width: 100%;
+    }
+
+    .collection-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .collection-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.input-group {
+    margin-bottom: 10px; /* atur jarak antar field */
+}
+
+.profile-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.profile-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.profile-avatar-large img {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile-photo-menu {
+    position: absolute;
+    bottom: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 8px 0;
+    display: none;
+    flex-direction: column;
+    min-width: 140px;
+    z-index: 100;
+}
+
+.profile-photo-menu.show {
+    display: flex;
+}
+
+.profile-photo-menu a,
+.profile-photo-menu button {
+    padding: 8px 12px;
+    text-align: center;
+    color: var(--text-main);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.profile-photo-menu a:hover,
+.profile-photo-menu button:hover {
+    background: var(--bg-hover);
+}
+
+/* Menghilangkan background kapsul khusus untuk tombol action di dalam card */
+.card-footer .save-btn,
+.footer-actions-row .save-btn,
+.action-btn.save-btn {
+  background: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+>>>>>>> d13217a (update profil)
