@@ -92,6 +92,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 </div>
+<script>
+document.querySelectorAll('.eye').forEach((eye) => {
+    eye.addEventListener('click', () => {
+        const input = eye.previousElementSibling;
 
+        if (input.type === "password") {
+            input.type = "text";
+            eye.textContent = "👁"; // opsional: ganti ikon
+        } else {
+            input.type = "password";
+            eye.textContent = "👁";
+        }
+    });
+});
+</script>
 </body>
 </html>

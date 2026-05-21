@@ -221,18 +221,27 @@ $collectionQuery = mysqli_query($conn,
 
                     <div class="input-group">
                         <label>Old Password</label>
-                        <input type="password" name="old_password">
+                        <div class="password-wrapper">
+                            <input type="password" name="old_password">
+                            <span class="eye">👁</span>
+                        </div>
                     </div>
 
                     <div class="password-row">
                         <div class="input-group">
                             <label>New Password</label>
-                            <input type="password" name="new_password">
+                            <div class="password-wrapper">
+                                <input type="password" name="new_password">
+                                <span class="eye">👁</span>
+                            </div>
                         </div>
 
                         <div class="input-group">
                             <label>Confirm Password</label>
-                            <input type="password" name="confirm_password">
+                            <div class="password-wrapper">
+                                <input type="password" name="confirm_password">
+                                <span class="eye">👁</span>
+                            </div>
                         </div>
                     </div>
 
@@ -328,6 +337,21 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('.profile-image-wrapper')) {
         photoMenu.classList.remove('show');
     }
+});
+
+// TOGGLE PASSWORD VISIBILITY
+document.querySelectorAll('.eye').forEach((eye) => {
+    eye.addEventListener('click', () => {
+        const input = eye.previousElementSibling;
+
+        if (input.type === "password") {
+            input.type = "text";
+            eye.textContent = "👁";
+        } else {
+            input.type = "password";
+            eye.textContent = "👁";
+        }
+    });
 });
 </script>
 
