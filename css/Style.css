@@ -44,12 +44,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
 
   overflow: hidden; /* penting: matikan scroll global */
->>>>>>> d13217a (update profil)
 }
 
 /* =========================================
@@ -68,13 +64,10 @@ a.action-btn:visited {
   align-items: center;
   gap: 0.4rem;
   cursor: pointer;
-<<<<<<< HEAD
-=======
   background: transparent; /* Menghilangkan latar belakang putih/abu-abu */
   border: none;            /* Menghilangkan border bawaan button */
   padding: 0;             /* Menghilangkan padding bawaan agar ukurannya pas */
   outline: none;           /* Menghilangkan garis biru saat tombol diklik */
->>>>>>> d13217a (update profil)
 }
 
 .action-btn svg {
@@ -325,19 +318,9 @@ a.action-btn:visited {
 .profile-btn {
   width: 40px;
   height: 40px;
-<<<<<<< HEAD
-  background-color: var(--text-main);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  transition: opacity 0.3s;
-=======
   border-radius: 50%;
   overflow: hidden;
   background: transparent;
->>>>>>> d13217a (update profil)
 }
 .profile-btn:hover {
   opacity: 0.8;
@@ -368,9 +351,6 @@ a.action-btn:visited {
   visibility: visible;
   transform: translateY(0);
 }
-<<<<<<< HEAD
-
-=======
 .profile-info-link{
     text-decoration: none;
     color: inherit;
@@ -380,32 +360,12 @@ a.action-btn:visited {
 .profile-info-link:hover{
     opacity: 0.9;
 }
->>>>>>> d13217a (update profil)
 .profile-info {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 2rem;
 }
-<<<<<<< HEAD
-.profile-avatar-large {
-  width: 65px;
-  height: 65px;
-  background-color: var(--text-main);
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-.profile-avatar-large svg {
-  width: 35px;
-  height: 35px;
-  fill: var(--bg-dark);
-}
-=======
-
->>>>>>> d13217a (update profil)
 .profile-name {
   color: var(--text-main);
   font-size: 1.1rem;
@@ -440,33 +400,21 @@ a.action-btn:visited {
 .main-container {
   display: flex;
   flex: 1;
-<<<<<<< HEAD
-  overflow: hidden;
-=======
 
   height: calc(100vh - 70px); /* tinggi navbar */
   overflow: hidden; /* biar scroll tidak bocor ke luar */
->>>>>>> d13217a (update profil)
 }
 
 .sidebar {
   width: 250px;
   border-right: 1px solid var(--border-color);
   padding: 2rem;
-<<<<<<< HEAD
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  overflow-y: auto;
-  flex-shrink: 0;
-=======
 
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
 
   overflow-y: auto; /* scroll di sini */
->>>>>>> d13217a (update profil)
 }
 
 .sidebar h3 {
@@ -499,12 +447,8 @@ a.action-btn:visited {
 .content {
   flex: 1;
   padding: 2rem 3rem;
-<<<<<<< HEAD
-  overflow-y: auto;
-=======
 
   overflow-y: auto; /* scroll terpisah */
->>>>>>> d13217a (update profil)
 }
 
 /* =========================================
@@ -1019,8 +963,6 @@ a.action-btn:visited {
     width: 100%;
   }
 }
-<<<<<<< HEAD
-=======
 
 /* =========================
    PROFILE PAGE STYLE
@@ -1319,4 +1261,21 @@ a.action-btn:visited {
   padding: 0 !important;
   box-shadow: none !important;
 }
->>>>>>> d13217a (update profil)
+
+.password-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+.password-wrapper .eye {
+    position: absolute;
+    right: 10px;
+    cursor: pointer;
+    user-select: none;
+}
